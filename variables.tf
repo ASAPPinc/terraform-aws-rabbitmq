@@ -50,3 +50,9 @@ variable "instance_volume_size" {
 variable "instance_volume_iops" {
   default = "0"
 }
+
+variable "additional_tags" {
+  description = "Additional tags to add to resources"
+  type = "map"
+  default = {}
+}

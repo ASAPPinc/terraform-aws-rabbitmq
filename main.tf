@@ -181,11 +181,11 @@ resource "aws_autoscaling_group" "rabbitmq" {
   load_balancers            = ["${aws_elb.elb.name}"]
   vpc_zone_identifier       = ["${var.subnet_ids}"]
 
-  tag {
-    key                 = "Name"
-    value               = "${local.cluster_name}"
-    propagate_at_launch = true
-  }
+  tags = "${merge(
+    var.additional_tags,
+      map("Name", local.cluster_name, propagate_at_launch = true
+    )
+  )}"
 }
 
 resource "aws_elb" "elb" {
@@ -218,7 +218,10 @@ resource "aws_elb" "elb" {
   internal        = true
   security_groups = ["${aws_security_group.rabbitmq_elb.id}", "${var.elb_additional_security_group_ids}"]
 
-  tags {
-    Name = "${local.cluster_name}"
-  }
+  tags = "${merge(
+    var.additional_tags,
+      map("Name", local.cluster_name, propagate_at_launch = true
+    )
+  )}"
+
 }
