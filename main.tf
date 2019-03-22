@@ -183,7 +183,7 @@ resource "aws_autoscaling_group" "rabbitmq" {
 
   tags = "${merge(
     var.additional_tags,
-      map("Name", local.cluster_name, propagate_at_launch = true
+      map("Name", local.cluster_name
     )
   )}"
 }
@@ -220,7 +220,8 @@ resource "aws_elb" "elb" {
 
   tags = "${merge(
     var.additional_tags,
-      map("Name", local.cluster_name, propagate_at_launch = true
+    map(
+      "Name", local.cluster_name
     )
   )}"
 
